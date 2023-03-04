@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "wdm", "~> 0.1.0" if Gem.win_platform?
 gem "jekyll", "~> 3.7"
-gem "minimal-mistakes-jekyll"
+gem 'minimal-mistakes-jekyll', '~> 4.24'
 gem "faraday-retry"
 gem "kramdown-parser-gfm"
 gem "webrick"
