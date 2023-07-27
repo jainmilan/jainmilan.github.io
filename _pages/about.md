@@ -18,4 +18,4 @@ In my Ph.D., I collaborated with some of the top research labs across the world,
 
 -- **02/2023:** Poster presentation <i class="fas fa-play-circle"></i> on <u>Training Machine Learning Models to Characterize Temporal Evolution of Disadvantaged Communities</u> at 2023 AAAI Workshop on Artificial Intelligence for Social Good in Washington D.C., USA. 
 
--- **01/2023:** Promoted to Senior Data Scientist at Pacific Northwest National Laboratory.
+-- **01/2023:** Promoted <i class="fas fa-award"></i> to Senior Data Scientist at Pacific Northwest National Laboratory.
