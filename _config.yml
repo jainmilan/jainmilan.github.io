@@ -11,7 +11,7 @@
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
 # theme                  : "minimal-mistakes-jekyll"
-remote_theme           : "mmistakes/minimal-mistakes"
+remote_theme           : "mmistakes/minimal-mistakes@4.26.2"
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
@@ -20,7 +20,7 @@ title                    : "Milan Jain"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Milan Jain"
-description              : "Personal webpage for Milan Jain who is a Data Scientist at Pacific Northwest National Laboratory"
+description              : "Personal webpage for Milan Jain who is a Senior Data Scientist at Pacific Northwest National Laboratory"
 url                      : https://jainmilan.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : jainmilan/jainmilan.github.io # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
