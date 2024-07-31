@@ -1,5 +1,4 @@
 ---
-layout: post
 title:  "Welcome to Jekyll!"
 excerpt_separator: <!--more-->
 ---
@@ -10,4 +9,4 @@ excerpt_separator: <!--more-->
 <!--more-->
 Out-of-excerpt
 
-I hope you like it!
+I hope you like it.
