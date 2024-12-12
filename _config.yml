@@ -220,6 +220,7 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
+  # - jekyll-archives
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -250,13 +251,14 @@ tag_archive:
 # jekyll-archives:
 #   enabled:
 #     - categories
-#     - tags
-#   layouts:
-#     category: archive-taxonomy
-#     tag: archive-taxonomy
+#   layout: home
 #   permalinks:
-#     category: /categories/:name/
-#     tag: /tags/:name/
+#     category: /:name/
+#   author_profile: true
+#   read_time: true
+#   comments: true
+#   share: false
+#   related: true
 
 
 # HTML Compression
