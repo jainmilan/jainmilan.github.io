@@ -20,14 +20,14 @@ The fundamental problem of causal inference is the fact that we cannot observe b
 However,
 
 $$
-\mathbb{E}[Y(1)] - \mathbb{E}[Y(0)] \ne \mathbb{E}[Y|T=1] - \mathbb{E}[Y|T=0]
+\mathbb{E}[Y(1)] - \mathbb{E}[Y(0)] \ne \mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0]
 $$
 
 While the left term is a causal quantity, the right term is an association quantity. How can we estimate the causal inference if we cannot reduce a causal expression to a purely statistical expression? Can we make some assumption that will allow us to estimate causal impact from association quantity? 
 
 Yes, and the assumption is *ignorability* i.e. $$(Y(1), Y(0))  \perp\!\!\!\perp T$$. Assuming ignorability is like ignoring how people ended up selecting the treatment they selected and just assuming that they were randomly assigned their treatment. In other words, the assumption states that once covariates are observed, the outcome is independent of the treatment assignment - the treatment assignment is as good as random. Another perspective on this assumption is *exchangeability*, which means that if the groups were swapped, the new treatment group would observe the same outcomes as the old treatment group, and the new control group would observe the same outcome as the old control group. 
 
-Ignorability/exchangeability allows us to estimate causal quantity by using purely statistical expression and that makes the causal quantity *identifiable* because we can compute it from a purely statistical quantity. But, how realistic is ignorability? To be honest, not much! In reality, the observed data is confounded and we must carry out multiple randomized experiments to ensure ignorability/exchangeability. To enable causal inference on observation data, we consider the assumption of conditional exchangeability, which allows conditioning of relevant variables and make subgroups exchangeable, i.e., $$(Y(1), Y(0))\perp\!\!\!\perp T \| X$$. The idea is that although the treatment and potential outcomes may be unconditionally associated (due to unconfounding), within levels of X, they are not associated. 
+Ignorability/exchangeability allows us to estimate causal quantity by using purely statistical expression and that makes the causal quantity *identifiable* because we can compute it from a purely statistical quantity. But, how realistic is ignorability? To be honest, not much! In reality, the observed data is confounded and we must carry out multiple randomized experiments to ensure ignorability/exchangeability. To enable causal inference on observation data, we consider the assumption of conditional exchangeability, which allows conditioning of relevant variables and make subgroups exchangeable, i.e., $$(Y(1), Y(0))\perp\!\!\!\perp T \mid X$$. The idea is that although the treatment and potential outcomes may be unconditionally associated (due to unconfounding), within levels of X, they are not associated. 
 
 However, we often cannot know for certain if conditional exchangeability holds. There might exist some unobserved confounders that are not part of X, usually a problem with observational data. The best thing to do usually is to observe and fit in as many covariates into X as possible to try to ensure unconfoundedness. But, positivity restricts the number of covariates that can be observed and fit for achieving the unconfoundedness. Having too many covariates can reduce the size of subgroup to a level where everyone is either always receive the treatment or everyone is always receiving the control, which is a positivity violation. The tradeoff is called **Positivity-Unconfoundedness Tradeoff**. 
 
@@ -36,20 +36,17 @@ Other key assumptions include:
 - *Consistency*: Also, referred to as "no multiple versions of treatment", consistency ensures that different values of treatment will lead to same outcome.
 - *SUTVA*: Stable unit-treatment value assumption is satisfied if unit *i's* outcome is simply a function of unit *i's* treatment. Therefore, SUTVA is a combination of no-interference and consistency. 
 
-$$\mathbb{E}[Y(1)-Y(0)] = \mathbb{E}[Y(1)] - \mathbb{E}[Y(0)]$$ (linearity of expectation)
-
-$$= \mathbb{E}_X[\mathbb{E}[Y(1)|X] - \mathbb{E}[Y(0)|X]] 
-$$ (law of iterated expectations)
-
-$$= \mathbb{E}_X[\mathbb{E}[Y(1)|T=1, X] - \mathbb{E}[Y(0)|T=0, X]] 
-$$ (unconfoundedness and positivity)
-
-$$= \mathbb{E}_X[\mathbb{E}[Y|T=1, X] - \mathbb{E}[Y|T=0, X]] 
-$$ 
-(consistency)
+$$
+\begin{align}
+\mathbb{E}[Y(1)-Y(0)] &= \mathbb{E}[Y(1)] - \mathbb{E}[Y(0)] \\ &\text{ (linearity of expectation)} \\
+&= \mathbb{E}_X[\mathbb{E}[Y(1) \mid X] - \mathbb{E}[Y(0) \mid X]] \\ & \text{ (law of iterated expectations)} \\
+&= \mathbb{E}_X[\mathbb{E}[Y(1) \mid T=1, X] - \mathbb{E}[Y(0) \mid T=0, X]] \\ & \text{ (unconfoundedness and positivity)} \\
+&= \mathbb{E}_X[\mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]] \\ & \text{ (consistency)}
+\end{align}
+$$
 
 Key Terminologies:
-- Estimand: The quantity that we want to estimate. Causal estimand is any estimand that contains a potential outcome. For example, $$E[Y(1)-Y(0)]$$ is the causal estimand and $$\mathbb{E}_X[\mathbb{E}[Y|T=1, X] - \mathbb{E}[Y|T=0, X]]$$ is the statistical estimand. 
+- Estimand: The quantity that we want to estimate. Causal estimand is any estimand that contains a potential outcome. For example, $$E[Y(1)-Y(0)]$$ is the causal estimand and $$\mathbb{E}_X[\mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]]$$ is the statistical estimand. 
 - Identification: Process of moving from a causal estimand to an equivalent statistical estimand. 
 - Estimate: The approximation an estimand using the data. 
 - Estimator: The function that maps a dataset to an estimate of the estimand. 
@@ -74,11 +71,11 @@ Association can flow through chain or forks, which causation only follows the di
 ## Causal Models
 *do-operator:* Conditioning on T=t just means that we are restricting our focus to the subset of the population to those who received treatment *t*, however, intervention denoted by do(T=t) would be to take the whole population and give everyone treatment t. For causal model, the average treatment effect when the treatment is binary is:
 
-$$\mathbb{E}[Y|do(T=1)]-\mathbb{E}[Y|do(T=0)]$$
+$$\mathbb{E}[Y \mid do(T=1)]-\mathbb{E}[Y \mid do(T=0)]$$
 
 If we can reduce an expression Q with do in it, to one without do in it, then Q is said to be identifiable. A causal estimand contains a do-operator and a statistical estimand doesn't. Whenever, do(t) appears after the conditioning bar, it means that everything in that expression is in the post-intervention world where the  intervention do(t) occurs.
 
-*Causal mechanism:* Process that generates $$X_i$$ as the conditional distribution of $$X_i$$, given all of its causes: $$P(x_i | pa_i)$$.
+*Causal mechanism:* Process that generates $$X_i$$ as the conditional distribution of $$X_i$$, given all of its causes: $$P(x_i \mid pa_i)$$.
 
 *Modularity Assumption:* Intervening on a variable $$X_i$$ only changes the causal mechanism for $$X_i$$, it does not change the causal mechanisms that generate any other variables. 
 
@@ -92,7 +89,7 @@ The causal mechanisms are not modular.
 
 *Backdoor Adjustment:* Given the modularity assumption, that W satisfies the backdoor criterion and positivity, we can identify the causal effect of T on Y: 
 $$
-    P(y|do(t)) = \sum_w{P(y|t, w) P(w)}
+    P(y \mid do(t)) = \sum_w{P(y \mid t, w) P(w)}
 $$
 
 We can use the backdoor adjustment if W d-separates T from Y in the manipulated graph. 
