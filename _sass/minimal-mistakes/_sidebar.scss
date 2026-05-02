@@ -186,6 +186,33 @@
   }
 }
 
+.author__twitter {
+  clear: both;
+  display: block;
+  width: 100%;
+  margin-top: 1.25em;
+
+  @include breakpoint(max-width $large) {
+    display: none;
+  }
+
+  .author__twitter-window {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 620px;
+    overflow: hidden;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    background-color: #fff;
+  }
+}
+
+.author__twitter-fallback {
+  margin-top: 0.5em;
+  font-size: $type-size-7;
+}
+
 .author__urls-wrapper {
   position: relative;
   display: table-cell;

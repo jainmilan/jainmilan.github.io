@@ -243,4 +243,19 @@
       {% include author-profile-custom-links.html %}
     </ul>
   </div>
+
+  {% assign twitter_username = site.twitter.username %}
+  {% if twitter_username %}
+    {% assign twitter_username = twitter_username | replace: "@", "" %}
+    <div class="author__twitter">
+      <iframe class="author__twitter-window"
+              title="Tweets by @{{ twitter_username }}"
+              src="https://syndication.twitter.com/srv/timeline-profile/screen-name/{{ twitter_username }}?dnt=true&amp;lang=en&amp;showHeader=true&amp;showReplies=true&amp;transparent=false"
+              loading="lazy">
+      </iframe>
+      <p class="author__twitter-fallback">
+        <a href="https://twitter.com/{{ twitter_username }}" rel="nofollow noopener noreferrer me">View tweets by @{{ twitter_username }}</a>
+      </p>
+    </div>
+  {% endif %}
 </div>
