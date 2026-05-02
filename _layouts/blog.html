@@ -1,0 +1,114 @@
+---
+layout: archive
+---
+
+{{ content }}
+
+{% assign visible_posts = site.posts | where_exp: "item", "item.hidden != true" %}
+
+<div class="blog-index" data-blog-index>
+  <div class="blog-index__filters" aria-label="Filter blog posts by tag">
+    <button class="blog-index__filter is-active" type="button" data-filter-tag="all" aria-pressed="true">
+      All <span>{{ visible_posts | size }}</span>
+    </button>
+    {% assign site_tags = site.tags | sort %}
+    {% for tag in site_tags %}
+      {% assign tag_name = tag[0] %}
+      {% assign tag_posts = tag[1] | where_exp: "item", "item.hidden != true" %}
+      {% if tag_posts.size > 0 %}
+        <button class="blog-index__filter" type="button" data-filter-tag="{{ tag_name | slugify }}" aria-pressed="false">
+          {{ tag_name }} <span>{{ tag_posts | size }}</span>
+        </button>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="blog-index__posts">
+    {% for post in visible_posts %}
+      {% assign post_tags = post.tags | default: empty %}
+      {% capture post_tag_slugs %}{% for tag in post_tags %}{{ tag | slugify }} {% endfor %}{% endcapture %}
+      {% assign words_per_minute = post.words_per_minute | default: site.words_per_minute | default: 200 %}
+      {% assign words = post.content | strip_html | number_of_words %}
+      {% assign read_minutes = words | divided_by: words_per_minute %}
+      {% if words < words_per_minute %}
+        {% assign read_time = "less than 1 minute read" %}
+      {% elsif words == words_per_minute %}
+        {% assign read_time = "1 minute read" %}
+      {% else %}
+        {% capture read_time %}{{ read_minutes }} minute read{% endcapture %}
+      {% endif %}
+
+      <article class="blog-card" data-blog-post data-tags="{{ post_tag_slugs | strip }}" itemscope itemtype="https://schema.org/BlogPosting">
+        <div class="blog-card__meta">
+          {% assign date_format = site.date_format | default: "%B %-d, %Y" %}
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time>
+          <span>{{ read_time }}</span>
+        </div>
+
+        <h2 class="blog-card__title" itemprop="headline">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h2>
+
+        {% if post.excerpt %}
+          <p class="blog-card__excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 220 }}</p>
+        {% endif %}
+
+        {% if post_tags.size > 0 %}
+          <div class="blog-card__tags" aria-label="Post tags">
+            {% for tag in post_tags %}
+              <button type="button" data-filter-tag="{{ tag | slugify }}">{{ tag }}</button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+
+  <p class="blog-index__empty" data-blog-empty hidden>No posts match this tag.</p>
+</div>
+
+<script>
+  (function () {
+    var blogIndex = document.querySelector("[data-blog-index]");
+
+    if (!blogIndex) {
+      return;
+    }
+
+    var filterButtons = blogIndex.querySelectorAll("[data-filter-tag]");
+    var posts = blogIndex.querySelectorAll("[data-blog-post]");
+    var emptyMessage = blogIndex.querySelector("[data-blog-empty]");
+
+    function setActiveTag(tag) {
+      var visibleCount = 0;
+
+      filterButtons.forEach(function (button) {
+        var isActive = button.getAttribute("data-filter-tag") === tag;
+
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+
+      posts.forEach(function (post) {
+        var tagList = " " + (post.getAttribute("data-tags") || "") + " ";
+        var isVisible = tag === "all" || tagList.indexOf(" " + tag + " ") !== -1;
+
+        post.hidden = !isVisible;
+
+        if (isVisible) {
+          visibleCount += 1;
+        }
+      });
+
+      if (emptyMessage) {
+        emptyMessage.hidden = visibleCount !== 0;
+      }
+    }
+
+    filterButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        setActiveTag(button.getAttribute("data-filter-tag"));
+      });
+    });
+  }());
+</script>
