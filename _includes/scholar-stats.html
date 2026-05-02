@@ -1,0 +1,379 @@
+<style>
+/* ── Two-column grid ─────────────────────────────────────────────────── */
+.sstat-grid {
+  display: flex;
+  gap: 2em;
+  align-items: center;
+  margin: 1.6em 0 0.6em;
+}
+.sstat-left {
+  flex: 0 0 43%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.sstat-right {
+  flex: 1;
+  min-width: 0;
+}
+@media (max-width: 560px) {
+  .sstat-grid { flex-direction: column; }
+  .sstat-left { flex: none; width: 100%; }
+}
+
+/* ── Doughnut chart ──────────────────────────────────────────────────── */
+.sstat-canvas-wrap {
+  width: 275px;
+  height: 275px;
+  margin: 0 auto;
+}
+
+/* ── Metric chips ────────────────────────────────────────────────────── */
+.sstat-chips {
+  display: flex;
+  gap: 0.5em;
+  justify-content: center;
+  margin-top: 0.9em;
+}
+.sstat-chip {
+  flex: 1;
+  padding: 0.45em 0.4em 0.5em;
+  background: #f8f9fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 7px;
+}
+.sstat-chip-val {
+  display: block;
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+}
+.sstat-chip-label {
+  display: block;
+  font-size: 0.58em;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25em;
+  white-space: nowrap;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+.sstat-footer {
+  font-size: 0.72em;
+  color: #aaa;
+  margin: 0.8em 0 1.4em;
+  text-align: center;
+  width: 100%;
+}
+.sstat-footer a { color: #aaa; }
+
+/* ── Venue tags ──────────────────────────────────────────────────────── */
+.sstat-venue-group {
+  margin-bottom: 0.65em;
+}
+.sstat-venue-group-label {
+  font-size: 0.62em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #999;
+  margin-bottom: 0.35em;
+}
+.sstat-venue-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+}
+/* GitHub-style two-tone badge */
+.sstat-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.7em;
+  line-height: 1;
+  border: 1px solid rgba(0,0,0,0.08);
+  white-space: nowrap;
+}
+.sstat-badge-name {
+  padding: 0.3em 0.5em;
+  font-weight: 500;
+  color: #fff;
+}
+.sstat-badge-count {
+  padding: 0.3em 0.5em;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0.9;
+}
+.sstat-badge-journals   .sstat-badge-name  { background: #2c5f8f; }
+.sstat-badge-journals   .sstat-badge-count { background: #1e4468; }
+.sstat-badge-conferences .sstat-badge-name  { background: #2a7a50; }
+.sstat-badge-conferences .sstat-badge-count { background: #1d5538; }
+.sstat-badge-others     .sstat-badge-name  { background: #6b6b6b; }
+.sstat-badge-others     .sstat-badge-count { background: #4a4a4a; }
+</style>
+
+<div class="sstat-grid">
+
+  <!-- ── Left: chart + legend + chips ─────────────────────────────── -->
+  <div class="sstat-left">
+    <div class="sstat-canvas-wrap">
+      <canvas id="pub-type-chart"></canvas>
+    </div>
+
+    <div class="sstat-chips">
+      <div class="sstat-chip">
+        <span class="sstat-chip-val">{{ site.data.stats.citations  | default: "—" }}</span>
+        <span class="sstat-chip-label">Citations</span>
+      </div>
+      <div class="sstat-chip">
+        <span class="sstat-chip-val">{{ site.data.stats.h_index   | default: "—" }}</span>
+        <span class="sstat-chip-label">h-index</span>
+      </div>
+      <div class="sstat-chip">
+        <span class="sstat-chip-val">{{ site.data.stats.i10_index | default: "—" }}</span>
+        <span class="sstat-chip-label">i10-index</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Right: venue tags ─────────────────────────────────────────── -->
+  {% assign journal_venues = site.data.stats.pub_venues | where: "type", "journals" %}
+  {% assign conf_venues    = site.data.stats.pub_venues | where: "type", "conferences" %}
+  {% assign other_venues   = site.data.stats.pub_venues | where: "type", "others" %}
+
+  <div class="sstat-right">
+    {% if journal_venues.size > 0 %}
+    <div class="sstat-venue-group">
+      <div class="sstat-venue-group-label">Journals</div>
+      <div class="sstat-venue-tags">
+        {% for v in journal_venues %}
+        <span class="sstat-badge sstat-badge-journals">
+          <span class="sstat-badge-name">{{ v.name }}</span>
+          <span class="sstat-badge-count">{{ v.count }}</span>
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if conf_venues.size > 0 %}
+    <div class="sstat-venue-group">
+      <div class="sstat-venue-group-label">Conferences</div>
+      <div class="sstat-venue-tags">
+        {% for v in conf_venues %}
+        <span class="sstat-badge sstat-badge-conferences">
+          <span class="sstat-badge-name">{{ v.name }}</span>
+          <span class="sstat-badge-count">{{ v.count }}</span>
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if other_venues.size > 0 %}
+    <div class="sstat-venue-group">
+      <div class="sstat-venue-group-label">Others</div>
+      <div class="sstat-venue-tags">
+        {% for v in other_venues %}
+        <span class="sstat-badge sstat-badge-others">
+          <span class="sstat-badge-name">{{ v.name }}</span>
+          <span class="sstat-badge-count">{{ v.count }}</span>
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+
+<p class="sstat-footer">
+  <i class="ai ai-google-scholar-square"></i>&nbsp;via
+  <a href="https://scholar.google.com/citations?user=Ss5594IAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>{% if site.data.stats.last_updated %}&thinsp;&middot;&thinsp;updated {{ site.data.stats.last_updated }}{% endif %}
+</p>
+
+<script>
+(function () {
+  var COUNTS = [{{ site.data.stats.pub_journals | default: 0 }},
+                {{ site.data.stats.pub_conferences | default: 0 }},
+                {{ site.data.stats.pub_others | default: 0 }}];
+  var LABELS = ['Journals', 'Conferences', 'Others'];
+  var COLORS = ['#2c5f8f', '#2a7a50', '#737373'];
+  var TOTAL  = {{ site.data.stats.publications | default: 0 }};
+
+  function buildChart() {
+    var canvas = document.getElementById('pub-type-chart');
+    if (!canvas || typeof Chart === 'undefined') return;
+
+    /* Place tooltip outside the hovered arc, extending away from center */
+    Chart.Tooltip.positioners.outerArc = function (elements) {
+      if (!elements.length) return false;
+      var arc = elements[0].element;
+      var mid = (arc.startAngle + arc.endAngle) / 2;
+      
+      // FIX: Remove the "+ 16". This ensures the tooltip targets the exact edge of the slice.
+      var r   = arc.outerRadius; 
+      
+      var cx  = Math.cos(mid);
+      var cy  = Math.sin(mid);
+      return {
+        x:      arc.x + cx * r,
+        y:      arc.y + cy * r,
+        xAlign: Math.abs(cx) < 0.25 ? 'center' : (cx > 0 ? 'left'   : 'right'),
+        yAlign: Math.abs(cy) < 0.25 ? 'center' : (cy > 0 ? 'top'    : 'bottom')
+      };
+    };
+
+    /* afterDraw so text paints on top of the donut ring */
+    var centerPlugin = {
+      id: 'centerText',
+      afterDraw: function (chart) {
+        var ctx  = chart.ctx;
+        var area = chart.chartArea;
+        var cx   = (area.left + area.right)  / 2;
+        var cy   = (area.top  + area.bottom) / 2;
+        var r    = Math.min(area.right - area.left, area.bottom - area.top) / 2;
+        ctx.save();
+        ctx.textAlign    = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font         = 'bold ' + Math.round(r * 0.48) + 'px sans-serif';
+        ctx.fillStyle    = '#1a1a1a';
+        ctx.fillText(TOTAL, cx, cy - r * 0.08);
+        ctx.font         = Math.round(r * 0.185) + 'px sans-serif';
+        ctx.fillStyle    = '#888';
+        ctx.fillText('publications', cx, cy + r * 0.26);
+        ctx.restore();
+      }
+    };
+
+    new Chart(canvas, {
+      type: 'doughnut',
+      plugins: [centerPlugin],
+      data: {
+        labels: LABELS,
+        datasets: [{
+          data: COUNTS,
+          backgroundColor: COLORS,
+          borderColor: '#fff',
+          borderWidth: 3,
+          hoverOffset: 5
+        }]
+      },
+      options: {
+        cutout: '80%',
+        animation: { animateRotate: true, duration: 800 },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            enabled: false,
+            external: function(context) {
+              let tooltipEl = document.getElementById('chartjs-tooltip');
+
+              // Create tooltip element
+              if (!tooltipEl) {
+                tooltipEl = document.createElement('div');
+                tooltipEl.id = 'chartjs-tooltip';
+
+                // Inline styles (no CSS file needed)
+                Object.assign(tooltipEl.style, {
+                  position: 'absolute',
+                  pointerEvents: 'none',
+                  transform: 'translate(-50%, -50%)',
+                  transition: 'all 0.15s ease',
+                  zIndex: 1000,
+                  opacity: 0
+                });
+
+                const inner = document.createElement('div');
+                inner.className = 'tooltip-content';
+
+                Object.assign(inner.style, {
+                  background: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '10px',
+                  padding: '10px 14px',
+                  boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  fontSize: '14px',
+                  whiteSpace: 'nowrap'
+                });
+
+                tooltipEl.appendChild(inner);
+                document.body.appendChild(tooltipEl);
+              }
+
+              const tooltip = context.tooltip;
+
+              if (tooltip.opacity === 0) {
+                tooltipEl.style.opacity = 0;
+                return;
+              }
+
+              const dataPoint = tooltip.dataPoints[0];
+              const value = dataPoint.raw;
+              const label = dataPoint.label;
+              const color = dataPoint.dataset.backgroundColor[dataPoint.dataIndex];
+              const pct = TOTAL > 0 ? Math.round(value / TOTAL * 100) : 0;
+
+              const inner = tooltipEl.firstChild;
+
+              // Clear + rebuild content (cleaner than innerHTML)
+              inner.innerHTML = '';
+
+              const title = document.createElement('div');
+              title.textContent = label;
+              Object.assign(title.style, {
+                fontWeight: '600',
+                color: '#111',
+                marginBottom: '4px'
+              });
+
+              const valueEl = document.createElement('div');
+              valueEl.textContent = `${value} (${pct}%)`;
+              Object.assign(valueEl.style, {
+                color: color,
+                fontWeight: '600'
+              });
+
+              inner.appendChild(title);
+              inner.appendChild(valueEl);
+
+              // Position outside arc
+              const {offsetLeft: posX, offsetTop: posY} = context.chart.canvas;
+              const arc = dataPoint.element;
+              const mid = (arc.startAngle + arc.endAngle) / 2;
+
+              const r = arc.outerRadius + 20;
+              const x = arc.x + Math.cos(mid) * r;
+              const y = arc.y + Math.sin(mid) * r;
+
+              tooltipEl.style.opacity = 1;
+              tooltipEl.style.left = posX + x + 'px';
+              tooltipEl.style.top = posY + y + 'px';
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function load(src, cb) {
+    var s = document.createElement('script');
+    s.src = src; s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  if (typeof Chart === 'undefined') {
+    load('https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js', buildChart);
+  } else {
+    buildChart();
+  }
+}());
+</script>

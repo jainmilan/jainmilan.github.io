@@ -1,0 +1,6 @@
+# Publication type breakdown — update manually when new papers are published.
+# These feed the doughnut chart on the about page.
+journals: 8            # J.1–J.8  (peer-reviewed journal articles)
+conferences: 9         # C.1–C.9  (conference & workshop papers)
+posters_abstracts: 25  # M.1–M.25 (posters, demos & abstracts)
+others: 1              # B.1      (book chapter)

@@ -1,0 +1,79 @@
+# Auto-updated by .github/workflows/update-scholar-stats.yml
+citations: 238
+h_index: 8
+i10_index: 7
+last_updated: May 2026
+pub_conferences: 11
+pub_journals: 11
+pub_others: 21
+pub_venues:
+- count: 5
+  name: arXiv Preprint
+  type: others
+- count: 4
+  name: PNNL Technical Report
+  type: others
+- count: 3
+  name: Scientific Data
+  type: journals
+- count: 2
+  name: IMWUT (Proc. ACM)
+  type: journals
+- count: 2
+  name: IEEE PerCom
+  type: conferences
+- count: 2
+  name: American Control Conference (ACC)
+  type: conferences
+- count: 2
+  name: Thesis
+  type: others
+- count: 2
+  name: JACoW
+  type: others
+- count: 2
+  name: ACM BuildSys / e-Energy
+  type: conferences
+- count: 2
+  name: Technical Report
+  type: others
+- count: 1
+  name: Advances in Building Energy Research
+  type: journals
+- count: 1
+  name: Energy Informatics
+  type: journals
+- count: 1
+  name: IEEE PES General Meeting
+  type: conferences
+- count: 1
+  name: ACM Computing Frontiers
+  type: conferences
+- count: 1
+  name: Computers, Environment & Urban Systems
+  type: journals
+- count: 1
+  name: ACM UbiComp
+  type: conferences
+- count: 1
+  name: Book Chapter
+  type: others
+- count: 1
+  name: Future Generation Computer Systems
+  type: journals
+- count: 1
+  name: Int'l J. Intelligent Transportation
+  type: journals
+- count: 1
+  name: Journal of Social Computing
+  type: journals
+- count: 1
+  name: IEEE HPEC
+  type: conferences
+- count: 1
+  name: AGU Fall Meeting
+  type: others
+- count: 1
+  name: DOE Software
+  type: others
+publications: 43

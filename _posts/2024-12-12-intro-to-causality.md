@@ -11,7 +11,7 @@ tags:
 
 "Causality is essential to solve Simpson's paradox." ~Brady Neal, Introduction to Causal Inference. 
 
-Spurious correlations are common across the world, where two events are caused by one common event and while the two events might seem correlated, the correlation is indeed spurious. In causal inference, we identify such confounders and resolve Simposon's paradox to quantify causal association between any two entities. Checkout this [website](https://www.tylervigen.com/spurious-correlations) to some examples of spurious correlations. 
+Spurious correlations are common, where two events are caused by one common event and while the two events might seem correlated, the correlation is indeed spurious. In causal inference, we identify such confounders and resolve Simposon's paradox to quantify causal association between any two entities. Checkout this [website](https://www.tylervigen.com/spurious-correlations) to see some examples of spurious correlations. 
 
 Technically, correlation is a measure of linear statistical dependence. Classifications introduced in this book include: (1) Statistical vs. Causal, (2) Identification vs. Estimation, and (3) Interventional vs. Observational. Further, last but not the least, it is very important to state the *assumptions*.
 
