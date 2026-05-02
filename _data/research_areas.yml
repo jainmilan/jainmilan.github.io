@@ -1,0 +1,43 @@
+ml_ai:
+  - title: "Foundation Models & LLMs"
+    tags:
+      - foundation models
+      - llms
+  - title: "Explainable AI"
+    tags:
+      - explainable ai
+  - title: "Spatiotemporal Learning"
+    tags:
+      - spatiotemporal learning
+      - time series
+  - title: "Decision Analytics"
+    tags:
+      - decision analytics
+      - visual analytics
+  - title: "Uncertainty & Optimization"
+    tags:
+      - uncertainty
+      - optimization
+
+applications:
+  - title: "Permitting & Environmental Review"
+    tags:
+      - permitting
+      - environmental review
+  - title: "Buildings & Smart Infrastructure"
+    tags:
+      - buildings
+      - smart infrastructure
+  - title: "Grid & Energy Infrastructure"
+    tags:
+      - grid
+      - energy infrastructure
+      - electricity markets
+  - title: "Environmental Monitoring"
+    tags:
+      - environmental monitoring
+      - methane
+  - title: "Mobility & Urban Systems"
+    tags:
+      - mobility
+      - urban systems

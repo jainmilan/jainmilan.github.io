@@ -271,6 +271,11 @@ compress_html:
 
 
 # Defaults
+collections:
+  projects:
+    output: true
+    permalink: /projects/:path/
+
 defaults:
   # _pages
   - scope:
@@ -295,3 +300,15 @@ defaults:
       comments: true
       share: false
       related: true
+  # _projects
+  - scope:
+      path: "_projects"
+      type: projects
+    values:
+      layout: single
+      classes: wide
+      author_profile: true
+      read_time: false
+      comments: false
+      share: false
+      related: false

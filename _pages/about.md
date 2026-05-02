@@ -1,5 +1,5 @@
 ---
-title: "about me."
+# title: "about me."
 layout: archive
 permalink: /about/
 classes: wide
