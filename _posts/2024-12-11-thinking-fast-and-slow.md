@@ -1,6 +1,8 @@
 ---
 title:  "Thinking Slow and Fast"
 excerpt_separator: <!--more-->
+header:
+    teaser: /assets/images/posts/research-abstract-teaser.png
 category: 
     - psychology
     - book summary

@@ -1,6 +1,8 @@
 ---
 title:  "Introduction to Causal Inference"
 excerpt_separator: <!--more-->
+header:
+    teaser: /assets/images/posts/research-abstract-teaser.png
 category: 
     - technical
 tags:

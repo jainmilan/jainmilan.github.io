@@ -1,6 +1,8 @@
 ---
 title:  "An AI Learning Hierarchy"
 excerpt_separator: <!--more-->
+header:
+    teaser: /assets/images/posts/research-abstract-teaser.png
 category: 
     - technical
 tags:

@@ -39,27 +39,35 @@ layout: archive
       {% endif %}
 
       <article class="blog-card" data-blog-post data-tags="{{ post_tag_slugs | strip }}" itemscope itemtype="https://schema.org/BlogPosting">
-        <div class="blog-card__meta">
-          {% assign date_format = site.date_format | default: "%B %-d, %Y" %}
-          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time>
-          <span>{{ read_time }}</span>
-        </div>
-
-        <h2 class="blog-card__title" itemprop="headline">
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </h2>
-
-        {% if post.excerpt %}
-          <p class="blog-card__excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 220 }}</p>
+        {% if post.header.teaser %}
+          <a class="blog-card__image" href="{{ post.url | relative_url }}" aria-label="{{ post.title | markdownify | strip_html | strip_newlines | escape_once }}">
+            <img src="{{ post.header.teaser | relative_url }}" alt="">
+          </a>
         {% endif %}
 
-        {% if post_tags.size > 0 %}
-          <div class="blog-card__tags" aria-label="Post tags">
-            {% for tag in post_tags %}
-              <button type="button" data-filter-tag="{{ tag | slugify }}">{{ tag }}</button>
-            {% endfor %}
+        <div class="blog-card__body">
+          <div class="blog-card__meta">
+            {% assign date_format = site.date_format | default: "%B %-d, %Y" %}
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time>
+            <span>{{ read_time }}</span>
           </div>
-        {% endif %}
+
+          <h2 class="blog-card__title" itemprop="headline">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h2>
+
+          {% if post.excerpt %}
+            <p class="blog-card__excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 220 }}</p>
+          {% endif %}
+
+          {% if post_tags.size > 0 %}
+            <div class="blog-card__tags" aria-label="Post tags">
+              {% for tag in post_tags %}
+                <button type="button" data-filter-tag="{{ tag | slugify }}">{{ tag }}</button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
       </article>
     {% endfor %}
   </div>
